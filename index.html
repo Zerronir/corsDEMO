@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Prueba CORS</title>
+</head>
+<body>
+
+    <h2>GET simple</h2>
+    <a href="http://localhost:8080/target?nom=bill">enlace</a>
+
+
+    <h3>Post Simple</h3>
+    <form action="http://localhost:8080/target" method="POST">
+        <input type="hidden" name="nom" value="bill">
+        <button type="submit">Enviar</button>
+    </form>
+
+    <h3>GET Javascript</h3>
+    <script type="application/javascript">
+        function ferGet(){
+            fetch("http://localhost:8080/target?nom=bill", {
+                method: 'GET',
+                credentials: 'include'
+            }).then(res => {console.log(res)});
+        }
+    </script>
+
+    <button onclick="ferGet()">ferGet()</button>
+
+    <h3>POST Javascript</h3>
+    <script type="application/javascript">
+        function ferPost(){
+            fetch("http://localhost:8080/target", {
+                method: 'POST',
+                credentials: 'include',
+                formData: new URLSearchParams("nom=bill")
+            }).then(res => {console.log(res)});
+        }
+    </script>
+
+    <button onclick="ferPost()">ferGet()</button>
+
+    <h3>POSTv2 Javascript</h3>
+    <script type="application/javascript">
+        function ferPostv2(){
+            fetch("http://localhost:8080/target", {
+                method: 'POST',
+                credentials: 'include',
+                body: JSON.stringify({nom: "bill"}),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => {console.log(res)});
+        }
+    </script>
+
+    <button onclick="ferPostv2()">ferPostv2()</button>
+
+</body>
+</html>
